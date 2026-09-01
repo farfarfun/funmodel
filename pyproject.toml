@@ -8,7 +8,6 @@ license = "MIT"
 license-files = ["LICENSE"]
 authors = [{ name = "牛哥", email = "farfarfun@qq.com" }]
 dependencies = [
-    "funpypi",
     "tqdm",
 ]
 
