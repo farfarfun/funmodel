@@ -8,7 +8,10 @@ license = "MIT"
 license-files = ["LICENSE"]
 authors = [{ name = "牛哥", email = "farfarfun@qq.com" }]
 dependencies = [
-    "tqdm",
+    "tqdm>=4.60",
+    "opencv-python>=4.5",
+    "numpy>=1.23",
+    "requests>=2.25",
 ]
 
 [build-system]
@@ -16,7 +19,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["funmodel"]
+packages = ["src/funmodel"]
 
 [dependency-groups]
-dev = ["pytest>=8.0"]
+dev = ["pytest>=8.0", "funbuild>=1.6.66"]
