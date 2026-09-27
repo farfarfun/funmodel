@@ -6,9 +6,10 @@ import time
 
 # 自定义无缓存读视频类
 class VideoCaptureQueue:
-    """Customized VideoCapture, always read last frame"""
+    """始终读取最新帧的视频捕获队列。"""
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: object, **kwargs: object) -> None:
+        """创建视频捕获队列并启动后台读取线程。"""
         import cv2
 
         # "camera_id" is a int type id or string name
@@ -32,10 +33,12 @@ class VideoCaptureQueue:
                     pass
             self.q.put((ret, frame))
 
-    def read(self):
+    def read(self) -> tuple[bool, object]:
+        """读取队列中的最新帧。"""
         return self.q.get()
 
-    def terminate(self):
+    def terminate(self) -> None:
+        """停止后台读取线程并释放视频设备。"""
         self.stop_threads = True
         self.cap.release()
 
