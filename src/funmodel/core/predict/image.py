@@ -14,7 +14,9 @@ class ImagePredictModel(PredictModel):
         """初始化图像预测模型，参数透传给 `PredictModel`。"""
         super(ImagePredictModel, self).__init__(*args, **kwargs)
 
-    def draw_image(self, image: np.ndarray, result: dict, *args: Any, **kwargs: Any) -> np.ndarray:
+    def draw_image(
+        self, image: np.ndarray, result: dict, *args: Any, **kwargs: Any
+    ) -> np.ndarray:
         """在图像上绘制预测结果，子类可覆盖实现。
 
         Args:
@@ -58,11 +60,14 @@ class ImagePredictModel(PredictModel):
         import cv2
 
         video_capture = VideoCaptureQueue(source)
-        while True:
-            ret, frame = video_capture.read()
-            if not ret:
-                break
-            if cv2.waitKey(1) & 0xFF == ord("q"):
-                break
-            response, image = self.predict(frame, draw=draw, *args, **kwargs)
-            yield response, frame, image
+        try:
+            while True:
+                ret, frame = video_capture.read()
+                if not ret:
+                    break
+                if cv2.waitKey(1) & 0xFF == ord("q"):
+                    break
+                response, image = self.predict(frame, *args, draw=draw, **kwargs)
+                yield response, frame, image
+        finally:
+            video_capture.terminate()

@@ -3,7 +3,7 @@ name = "funmodel"
 version = "0.0.10"
 description = "funmodel"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 license = "MIT"
 license-files = ["LICENSE"]
 authors = [{ name = "牛哥", email = "farfarfun@qq.com" }]
@@ -11,7 +11,7 @@ dependencies = [
     "tqdm>=4.60",
     "opencv-python>=4.5",
     "numpy>=1.23",
-    "requests>=2.25",
+    "funget>=1.1.63",
 ]
 
 [build-system]

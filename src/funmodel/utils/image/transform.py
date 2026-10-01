@@ -1,26 +1,33 @@
-# coding:utf8
-
 import base64
-import urllib.request
+import tempfile
+from pathlib import Path
 
 import cv2
 import numpy as np
-import requests
+from funget import download
+
+
+def _download_bytes(url: str) -> bytes:
+    with tempfile.TemporaryDirectory() as directory:
+        path = Path(directory) / "image"
+        if not download(url, path, overwrite=True):
+            raise OSError(f"图片下载失败: {url}")
+        return path.read_bytes()
 
 
 def url_to_base64(url: str) -> bytes:
     """下载 URL 指向的图片并转换为 base64 编码字节串。"""
-    return base64.b64encode(requests.get(url).content)
+    return base64.b64encode(_download_bytes(url))
 
 
-def url_to_cvimg(url: str) -> np.ndarray:
-    """下载 URL 指向的图片并解码为 OpenCV 图像矩阵（BGR）。"""
-    img = np.asarray(bytearray(urllib.request.urlopen(url).read()), dtype="uint8")
+def url_to_cvimg(url: str) -> np.ndarray | None:
+    """下载 URL 指向的图片并解码为 OpenCV 图像矩阵，数据无效时返回 None。"""
+    img = np.frombuffer(_download_bytes(url), dtype=np.uint8)
     return cv2.imdecode(img, cv2.IMREAD_COLOR)
 
 
-def base64_to_cvimg(b64: str | bytes) -> np.ndarray:
-    """将 base64 编码的图片数据解码为 OpenCV 图像矩阵。"""
+def base64_to_cvimg(b64: str | bytes) -> np.ndarray | None:
+    """将 base64 图片数据解码为 OpenCV 图像矩阵，数据无效时返回 None。"""
     return cv2.imdecode(
         np.frombuffer(base64.b64decode(b64), np.uint8), cv2.COLOR_RGB2BGR
     )

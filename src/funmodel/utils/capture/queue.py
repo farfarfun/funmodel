@@ -25,6 +25,7 @@ class VideoCaptureQueue:
         while not self.stop_threads:
             ret, frame = self.cap.read()
             if not ret:
+                self.q.put((ret, frame))
                 break
             if not self.q.empty():
                 try:
