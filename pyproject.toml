@@ -1,7 +1,7 @@
 [project]
 name = "funmodel"
 version = "0.0.10"
-description = "funmodel"
+description = "Shared multimedia and AI model utilities with prediction, caching, and image tools"
 readme = "README.md"
 requires-python = ">=3.12"
 license = "MIT"

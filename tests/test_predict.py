@@ -20,6 +20,16 @@ def test_predict_model_creates_cache_path(tmp_cache_dir):
     assert os.path.isdir(model.cache_path)
 
 
+def test_predict_model_uses_home_directory_when_home_is_unset(tmp_path, monkeypatch):
+    monkeypatch.delenv("HOME", raising=False)
+    monkeypatch.setattr("funmodel.core.predict.base.Path.home", lambda: tmp_path)
+
+    model = PredictModel(model_name="demo")
+
+    assert model.cache_path == f"{tmp_path}/.funmodel/demo"
+    assert os.path.isdir(model.cache_path)
+
+
 def test_predict_model_default_load_and_predict_are_noop(tmp_cache_dir):
     model = PredictModel(model_name="demo", cache_dir=tmp_cache_dir)
     assert model.load() is None

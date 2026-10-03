@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from typing import Any
 
 
@@ -19,7 +20,7 @@ class PredictModel:
             cache_dir: 模型缓存根目录，默认使用 `~/.funmodel/`。
         """
         self.model_name = model_name
-        self.cache_dir = cache_dir or f"{os.environ['HOME'] or os.getcwd()}/.funmodel/"
+        self.cache_dir = cache_dir or str(Path.home() / ".funmodel")
         os.makedirs(self.cache_path, exist_ok=True)
 
     @property

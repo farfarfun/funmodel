@@ -5,7 +5,7 @@
 ### 变更
 
 - 源码迁移到 `src/funmodel/` 标准布局。
-- 补齐 `opencv-python`/`numpy`/`requests` 运行时依赖及版本下限。
+- 补齐 `opencv-python`/`numpy` 运行时依赖及版本下限。
 - 为公开类和函数补充类型标注与中文 docstring。
 
 ### 新增
