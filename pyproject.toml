@@ -22,4 +22,4 @@ build-backend = "hatchling.build"
 packages = ["src/funmodel"]
 
 [dependency-groups]
-dev = ["pytest>=8.0", "funbuild>=1.6.66"]
+dev = ["pytest>=8.0", "funbuild>=1.6.66", "ruff>=0.16"]

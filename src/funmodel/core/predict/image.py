@@ -1,4 +1,5 @@
-from typing import Any, Generator
+from collections.abc import Generator
+from typing import Any
 
 import numpy as np
 
@@ -12,7 +13,7 @@ class ImagePredictModel(PredictModel):
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         """初始化图像预测模型，参数透传给 `PredictModel`。"""
-        super(ImagePredictModel, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def draw_image(
         self, image: np.ndarray, result: dict, *args: Any, **kwargs: Any

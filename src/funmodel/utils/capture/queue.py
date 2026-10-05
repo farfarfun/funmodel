@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 import queue
 import threading
-import time
 
 
 # 自定义无缓存读视频类
@@ -9,13 +7,19 @@ class VideoCaptureQueue:
     """始终读取最新帧的视频捕获队列。"""
 
     def __init__(self, *args: object, **kwargs: object) -> None:
-        """创建视频捕获队列并启动后台读取线程。"""
+        """创建视频捕获队列并启动后台读取线程。
+
+        Args:
+            *args: 透传给 `cv2.VideoCapture` 的位置参数，常见为摄像头编号（int）
+                或设备名称/视频文件路径（str）。
+            **kwargs: 透传给 `cv2.VideoCapture` 的关键字参数。
+        """
         import cv2
 
-        # "camera_id" is a int type id or string name
+        # camera_id 可以是摄像头编号（int），也可以是设备名称或视频文件路径（str）
         self.cap = cv2.VideoCapture(*args, **kwargs)
         self.q = queue.Queue(maxsize=3)
-        self.stop_threads = False  # to gracefully close sub-thread
+        self.stop_threads = False  # 用于优雅地结束后台读取线程
         th = threading.Thread(target=self._reader)
         th.daemon = True  # 设置工作线程为后台运行
         th.start()
@@ -42,17 +46,3 @@ class VideoCaptureQueue:
         """停止后台读取线程并释放视频设备。"""
         self.stop_threads = True
         self.cap.release()
-
-
-def test():
-    import cv2
-
-    # 测试自定义VideoCapture类
-    cap = VideoCaptureQueue(0)
-    while True:
-        ret, frame = cap.read()
-        time.sleep(0.05)  # 模拟耗时操作，单位：秒
-        cv2.imshow("frame", frame)
-        if chr(cv2.waitKey(1) & 255) == "q":  # 按 q 退出
-            cap.terminate()
-            break

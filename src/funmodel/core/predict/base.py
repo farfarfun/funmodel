@@ -30,8 +30,6 @@ class PredictModel:
 
     def load(self, *args: Any, **kwargs: Any) -> None:
         """加载模型权重，子类需覆盖实现。"""
-        pass
 
     def predict(self, *args: Any, **kwargs: Any) -> Any:
         """执行预测，子类需覆盖实现。"""
-        pass

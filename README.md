@@ -11,12 +11,15 @@ uv pip install funmodel
 ## 最小可运行示例
 
 ```python
+import numpy as np
+
 from funmodel.core.predict.image import ImagePredictModel
 
 model = ImagePredictModel(model_name="demo")
 print(model.cache_path)  # ~/.funmodel/demo
 
-result, image = model.predict(image=None)
+image = np.zeros((480, 640, 3), dtype=np.uint8)
+result, image = model.predict(image=image)
 ```
 
 ---
