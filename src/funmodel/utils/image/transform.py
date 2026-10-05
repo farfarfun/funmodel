@@ -29,7 +29,7 @@ def url_to_cvimg(url: str) -> np.ndarray | None:
 def base64_to_cvimg(b64: str | bytes) -> np.ndarray | None:
     """将 base64 图片数据解码为 OpenCV 图像矩阵，数据无效时返回 None。"""
     return cv2.imdecode(
-        np.frombuffer(base64.b64decode(b64), np.uint8), cv2.COLOR_RGB2BGR
+        np.frombuffer(base64.b64decode(b64), np.uint8), cv2.IMREAD_COLOR
     )
 
 

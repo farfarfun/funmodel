@@ -43,6 +43,18 @@ def test_base64_to_cvimg_accepts_str_and_bytes():
     assert base64.b64decode(encoded_str) == base64.b64decode(encoded_bytes)
 
 
+def test_base64_to_cvimg_forces_three_channels_for_grayscale_source():
+    # 回归用例：此前误用 cv2.COLOR_RGB2BGR（数值上等价于 cv2.IMREAD_ANYCOLOR）
+    # 作为 imdecode 的 flag 参数，灰度图会被原样解码成二维矩阵，
+    # 导致调用方按惯例访问 shape[2] 时抛 IndexError。
+    gray = np.zeros((4, 4), dtype=np.uint8)
+    encoded = base64.b64encode(cv2.imencode(".png", gray)[1].tobytes())
+
+    decoded = base64_to_cvimg(encoded)
+
+    assert decoded.shape == (4, 4, 3)
+
+
 def test_url_to_base64_downloads_with_funget():
     data = b"image data"
     with patch(
