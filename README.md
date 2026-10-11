@@ -4,9 +4,15 @@
 
 ## 安装
 
+需要 Python 3.12 或更高版本。安装命令会同时安装 `numpy`、`opencv-python` 和
+`funget` 等运行时依赖：
+
 ```bash
 uv pip install funmodel
 ```
+
+在 Linux 的精简或无桌面环境中，如 OpenCV 导入时提示缺少共享库，请安装发行版提供的
+OpenGL/GLib 运行时库（例如 Debian/Ubuntu 的 `libgl1` 和 `libglib2.0-0`）。
 
 ## 最小可运行示例
 
