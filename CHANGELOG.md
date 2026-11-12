@@ -11,6 +11,11 @@
 ### 新增
 
 - README 补充简介、安装命令与最小可运行示例，并附组织统一介绍区块。
+- README 新增「环境要求」：写明 Python `>=3.12` 的下限来源（直接依赖 `funget`）、
+  自动安装的运行时依赖清单，以及 `opencv-python` 在精简容器里需要的 `libGL`/`glib`
+  等原生库（或改用 `opencv-python-headless`）。
+- README 新增「包结构：PEP 420 命名空间包」：说明为什么刻意不放
+  `src/funmodel/__init__.py`，并给出 `funmodel-<能力>` 扩展包的挂载约定。
 - `tests/` 补充覆盖 `PredictModel`/`ImagePredictModel` 公开 API 的用例。
 
 ### 修复
